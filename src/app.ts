@@ -10,7 +10,15 @@ const main = async () => {
   provider.initHttpServer(3002);
 
   provider.http.server.post('/send-message', handleCtx( async(bot, req, res) => {
-    await bot.sendMessage('5492262638425', 'Hola, ¿en qué puedo ayudarte vagancia?', {});
+       
+    const body = req.body;
+    console.log(body);
+    const message = body.message;
+    const phone = body.phone;
+    const mediaContent = body.mediaUrl ? { media: body.mediaUrl } : {};
+
+    await bot.sendMessage(phone, message, mediaContent);
+
     res.end('Mensaje enviado');
   }));
 
